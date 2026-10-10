@@ -1,19 +1,50 @@
-PROCUREMENT FUNDING — POWER BI PROJECT FOR GITHUB
+PROCUREMENT FUNDING — IMPROVED PBIP PROJECT
 
-Open Procurement_Funding_Improved.pbip in Power BI Desktop, keeping the Report
-and SemanticModel folders alongside it. This package excludes .pbi/cache.abf
-and local settings. It contains definitions, not the imported data snapshot.
+OPEN
+1. Extract this entire ZIP (do not open the PBIP from inside the ZIP).
+2. Open Procurement_Funding_Improved.pbip in Power BI Desktop.
+3. Keep the Report and SemanticModel folders beside the PBIP file.
+Use the same or a newer Desktop release than the source file (September 2026).
+If requested, enable the Power BI Project save option in Desktop settings.
 
-Update the four Power Query source queries to your BigQuery project/dataset,
-authenticate using your own account, and refresh after building the dbt models.
-The supplied queries retain the original project procurement-analysis-508918
-and dataset procurement_analytics. No login credentials are included.
+The ZIP includes the imported data cache. Do not delete the .pbi/cache.abf file
+if you want to retain the existing imported snapshot. Refreshing uses the
+original Google BigQuery queries and requires your existing source access.
 
-There are three report pages and nine DAX measures. The semantic model has the
-four business tables plus two hidden automatic date tables. Agency dropdowns
-are page-specific. Supplier concentration ignores supplier selections while
-retaining agency/date context. See ../docs/architecture-and-metrics.md.
+IMPROVEMENTS
+- Three consistently styled 1600 x 900 report pages.
+- Clear titles, readable typography, white panels and navy/teal/orange colours.
+- Four KPI cards on every page and an awarding-agency dropdown per page.
+- Daily trend explicitly sorted by date ascending.
+- Shorter visual field labels, readable table styling and consistent spacing.
+- Source, sampling and interpretation notes on every page.
+- Original Top 10 filters, nine DAX measures and source queries preserved.
 
-The report and semantic-model JSON were checked structurally during packaging.
-Power BI Desktop opening, rendering, refresh and interactions were not tested
-here. Existing dashboard screenshots predate this improved report layout.
+HOW TO USE
+Select an agency in the dropdown; use its clear-selection control to reset.
+The dropdowns are page-specific, not synchronized between pages.
+Click bars to explore cross-filtering. Supplier concentration measures retain
+their original definition: they ignore supplier filters, while respecting
+agency/date context. Reductions are positive magnitudes; net obligations are
+funding increases minus reductions. Offer-count coverage includes zero offers;
+single-offer share uses only actions with one or more offers.
+
+VALIDATION AND LIMITS
+The project was reconstructed from the uploaded PBIX. All 6 model tables
+(including 2 hidden date tables), 62 columns, 9 measure expressions, 4 source
+queries and the decompressed imported cache were checked against the original.
+Original chart filters, visual field references and page bounds were checked.
+Power BI Desktop is not available in this environment, so native opening,
+rendering, cache restoration and interactive behaviour have NOT been tested.
+If Desktop reports an error, keep the original PBIX and share the error text.
+The report uses the supported legacy report.json project layout and a model.bim
+semantic model. You can save to newer project formats from Power BI Desktop.
+
+
+PRESCRIPTIVE ANALYSIS (NEW FOURTH PAGE)
+- Added dynamic rule-based DAX review measures, so the new page can use imported fct_contract_actions and dim_agency.
+- The page uses the original BigQuery fact table and is intended to show recommendations after Power BI Desktop recalculates them.
+- Rules cover offer-count completeness, high single-offer proportions with sufficient coverage, supplier concentration, and high funding reductions.
+- Suggested action and priority are NOT compliance findings or verified savings. The page uses illustrative triage thresholds.
+- Screenshot/preview is a designed representation using verified report-level totals; not a live Power BI capture or proof of successful Desktop refresh.
+- The separate dbt BigQuery view in GitHub is optional and not required by this page; the DAX measures implement equivalent review intent.
