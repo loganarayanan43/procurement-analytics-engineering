@@ -1,0 +1,8 @@
+﻿version: 2
+
+sources:
+  - name: procurement_raw
+    database: procurement-analysis-508918
+    schema: procurement_raw
+    tables:
+      - name: contract_actions

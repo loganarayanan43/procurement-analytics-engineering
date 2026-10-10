@@ -1,0 +1,1242 @@
+{
+  "name": "Procurement_Funding_Improved",
+  "compatibilityLevel": 1600,
+  "model": {
+    "culture": "en-US",
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "sourceQueryCulture": "en-IN",
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "tables": [
+      {
+        "name": "DateTableTemplate_d4b49706-4242-43fd-a458-a22c2d33d486",
+        "columns": [
+          {
+            "name": "Date",
+            "dataType": "dateTime",
+            "dataCategory": "PaddedDateTableDates",
+            "formatString": "General Date",
+            "lineageTag": "edcc0c8a-ac5b-47f9-be43-28893d621cfb",
+            "summarizeBy": "none",
+            "isHidden": true,
+            "type": "calculatedTableColumn",
+            "sourceColumn": "[Date]",
+            "isNameInferred": true,
+            "isDataTypeInferred": true,
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              }
+            ]
+          },
+          {
+            "name": "Year",
+            "dataType": "int64",
+            "dataCategory": "Years",
+            "formatString": "0",
+            "lineageTag": "4a394966-13d1-4ccc-ac08-1bfe6fcbe63e",
+            "summarizeBy": "none",
+            "isHidden": true,
+            "type": "calculated",
+            "expression": "YEAR([Date])",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "Year"
+              }
+            ]
+          },
+          {
+            "name": "MonthNo",
+            "dataType": "int64",
+            "dataCategory": "MonthOfYear",
+            "formatString": "0",
+            "lineageTag": "0d546b79-da16-4341-8dd4-16b6128f79cc",
+            "summarizeBy": "none",
+            "isHidden": true,
+            "type": "calculated",
+            "expression": "MONTH([Date])",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "MonthNumber"
+              }
+            ]
+          },
+          {
+            "name": "Month",
+            "dataType": "string",
+            "dataCategory": "Months",
+            "lineageTag": "1d838992-14ff-4249-b4c0-38a9595e9399",
+            "summarizeBy": "none",
+            "isHidden": true,
+            "type": "calculated",
+            "expression": "FORMAT([Date], \"MMMM\")",
+            "sortByColumn": "MonthNo",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "Month"
+              }
+            ]
+          },
+          {
+            "name": "QuarterNo",
+            "dataType": "int64",
+            "dataCategory": "QuarterOfYear",
+            "formatString": "0",
+            "lineageTag": "8e91be58-49d5-481d-ae26-dfbb02622709",
+            "summarizeBy": "none",
+            "isHidden": true,
+            "type": "calculated",
+            "expression": "INT(([MonthNo] + 2) / 3)",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "QuarterNumber"
+              }
+            ]
+          },
+          {
+            "name": "Quarter",
+            "dataType": "string",
+            "dataCategory": "Quarters",
+            "lineageTag": "974bd723-e5ad-4c0b-a00e-b8455e9513aa",
+            "summarizeBy": "none",
+            "isHidden": true,
+            "type": "calculated",
+            "expression": "\"Qtr \" & [QuarterNo]",
+            "sortByColumn": "QuarterNo",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "Quarter"
+              }
+            ]
+          },
+          {
+            "name": "Day",
+            "dataType": "int64",
+            "dataCategory": "DayOfMonth",
+            "formatString": "0",
+            "lineageTag": "44b527f0-e738-4377-8129-2117d2018e0f",
+            "summarizeBy": "none",
+            "isHidden": true,
+            "type": "calculated",
+            "expression": "DAY([Date])",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "Day"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "DateTableTemplate_d4b49706-4242-43fd-a458-a22c2d33d486",
+            "mode": "import",
+            "source": {
+              "type": "calculated",
+              "expression": "Calendar(Date(2015,1,1), Date(2015,1,1))"
+            }
+          }
+        ],
+        "lineageTag": "601239b3-52e5-4f67-a28b-3320fafe4331",
+        "isHidden": true,
+        "isPrivate": true,
+        "hierarchies": [
+          {
+            "name": "Date Hierarchy",
+            "levels": [
+              {
+                "name": "Year",
+                "ordinal": 0,
+                "column": "Year"
+              },
+              {
+                "name": "Quarter",
+                "ordinal": 1,
+                "column": "Quarter"
+              },
+              {
+                "name": "Month",
+                "ordinal": 2,
+                "column": "Month"
+              },
+              {
+                "name": "Day",
+                "ordinal": 3,
+                "column": "Day"
+              }
+            ],
+            "lineageTag": "54e1b37a-543c-4298-95b3-5ba27b4d8bb9"
+          }
+        ],
+        "annotations": [
+          {
+            "name": "__PBI_TemplateDateTable",
+            "value": "true"
+          },
+          {
+            "name": "DefaultItem",
+            "value": "DateHierarchy"
+          }
+        ]
+      },
+      {
+        "name": "dim_date",
+        "columns": [
+          {
+            "name": "date_key",
+            "dataType": "dateTime",
+            "formatString": "Long Date",
+            "lineageTag": "01d2c9a6-33b1-451c-b730-61812ac6b8af",
+            "summarizeBy": "none",
+            "sourceColumn": "date_key",
+            "variations": [
+              {
+                "name": "Variation",
+                "relationship": "2a1b88e7-4a3c-4e62-a134-793573d6d3f4",
+                "defaultHierarchy": {
+                  "table": "LocalDateTable_686ba2c0-74fc-4c8d-a1d2-12fade15a5fd",
+                  "hierarchy": "Date Hierarchy"
+                },
+                "isDefault": true
+              }
+            ],
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ]
+          },
+          {
+            "name": "calendar_year",
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "eea32dba-1b16-43c7-9a11-fa3520d2f9c7",
+            "summarizeBy": "sum",
+            "sourceColumn": "calendar_year",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "calendar_month",
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "d310ce98-a2fe-4076-9c06-939d3b3abd99",
+            "summarizeBy": "sum",
+            "sourceColumn": "calendar_month",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "month_name",
+            "dataType": "string",
+            "lineageTag": "e4c2f9a7-64e5-427b-b933-35539db18cf3",
+            "summarizeBy": "none",
+            "sourceColumn": "month_name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "day_of_month",
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "4e3d0d91-98d0-4791-ad17-37d04c89fa9b",
+            "summarizeBy": "sum",
+            "sourceColumn": "day_of_month",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "weekday_name",
+            "dataType": "string",
+            "lineageTag": "5397338b-583c-4068-b998-cdae3fd7a02f",
+            "summarizeBy": "none",
+            "sourceColumn": "weekday_name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "is_weekend",
+            "dataType": "boolean",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "lineageTag": "08438078-4736-4654-85ca-7c7f44fbba68",
+            "summarizeBy": "none",
+            "sourceColumn": "is_weekend",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "dim_date",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": "let\n    Source = GoogleBigQuery.Database([Implementation=\"2.0\"]),\n    #\"procurement-analysis-508918_Database\" = Source{[Name=\"procurement-analysis-508918\",Kind=\"Database\"]}[Data],\n    procurement_analytics_Schema = #\"procurement-analysis-508918_Database\"{[Name=\"procurement_analytics\",Kind=\"Schema\"]}[Data],\n    dim_date_Table = procurement_analytics_Schema{[Name=\"dim_date\",Kind=\"Table\"]}[Data]\nin\n    dim_date_Table"
+            }
+          }
+        ],
+        "lineageTag": "5626c7e0-1f37-4d5f-9936-f8173ead4d14"
+      },
+      {
+        "name": "LocalDateTable_686ba2c0-74fc-4c8d-a1d2-12fade15a5fd",
+        "columns": [
+          {
+            "name": "Date",
+            "dataType": "dateTime",
+            "dataCategory": "PaddedDateTableDates",
+            "formatString": "General Date",
+            "lineageTag": "dc0c3b63-ac24-4b4c-9df0-bc7e6944fd1e",
+            "summarizeBy": "none",
+            "isHidden": true,
+            "type": "calculatedTableColumn",
+            "sourceColumn": "[Date]",
+            "isNameInferred": true,
+            "isDataTypeInferred": true,
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              }
+            ]
+          },
+          {
+            "name": "Year",
+            "dataType": "int64",
+            "dataCategory": "Years",
+            "formatString": "0",
+            "lineageTag": "5067e88e-2fbb-4c06-8d0d-d40694cca62b",
+            "summarizeBy": "none",
+            "isHidden": true,
+            "type": "calculated",
+            "expression": "YEAR([Date])",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "Year"
+              }
+            ]
+          },
+          {
+            "name": "MonthNo",
+            "dataType": "int64",
+            "dataCategory": "MonthOfYear",
+            "formatString": "0",
+            "lineageTag": "1fd31d8a-ef43-4358-b785-8e06f501af39",
+            "summarizeBy": "none",
+            "isHidden": true,
+            "type": "calculated",
+            "expression": "MONTH([Date])",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "MonthNumber"
+              }
+            ]
+          },
+          {
+            "name": "Month",
+            "dataType": "string",
+            "dataCategory": "Months",
+            "lineageTag": "d5b7aa09-785d-47dc-9493-1b9079655339",
+            "summarizeBy": "none",
+            "isHidden": true,
+            "type": "calculated",
+            "expression": "FORMAT([Date], \"MMMM\")",
+            "sortByColumn": "MonthNo",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "Month"
+              }
+            ]
+          },
+          {
+            "name": "QuarterNo",
+            "dataType": "int64",
+            "dataCategory": "QuarterOfYear",
+            "formatString": "0",
+            "lineageTag": "052a884f-473b-40f0-94ce-c1d657591cf6",
+            "summarizeBy": "none",
+            "isHidden": true,
+            "type": "calculated",
+            "expression": "INT(([MonthNo] + 2) / 3)",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "QuarterNumber"
+              }
+            ]
+          },
+          {
+            "name": "Quarter",
+            "dataType": "string",
+            "dataCategory": "Quarters",
+            "lineageTag": "d00c09bd-ce5c-4c24-807c-bec50d69ae90",
+            "summarizeBy": "none",
+            "isHidden": true,
+            "type": "calculated",
+            "expression": "\"Qtr \" & [QuarterNo]",
+            "sortByColumn": "QuarterNo",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "Quarter"
+              }
+            ]
+          },
+          {
+            "name": "Day",
+            "dataType": "int64",
+            "dataCategory": "DayOfMonth",
+            "formatString": "0",
+            "lineageTag": "38f6317d-56b5-4e81-9fd9-f78ed35eeddf",
+            "summarizeBy": "none",
+            "isHidden": true,
+            "type": "calculated",
+            "expression": "DAY([Date])",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "User"
+              },
+              {
+                "name": "TemplateId",
+                "value": "Day"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "LocalDateTable_686ba2c0-74fc-4c8d-a1d2-12fade15a5fd",
+            "mode": "import",
+            "source": {
+              "type": "calculated",
+              "expression": "Calendar(Date(Year(MIN('dim_date'[date_key])), 1, 1), Date(Year(MAX('dim_date'[date_key])), 12, 31))"
+            }
+          }
+        ],
+        "lineageTag": "182ef8cf-d86c-4a50-808b-6a4942fd82ea",
+        "isHidden": true,
+        "showAsVariationsOnly": true,
+        "hierarchies": [
+          {
+            "name": "Date Hierarchy",
+            "levels": [
+              {
+                "name": "Year",
+                "ordinal": 0,
+                "column": "Year"
+              },
+              {
+                "name": "Quarter",
+                "ordinal": 1,
+                "column": "Quarter"
+              },
+              {
+                "name": "Month",
+                "ordinal": 2,
+                "column": "Month"
+              },
+              {
+                "name": "Day",
+                "ordinal": 3,
+                "column": "Day"
+              }
+            ],
+            "lineageTag": "905e1976-4d77-45da-a206-380cbd2ba0fa"
+          }
+        ],
+        "annotations": [
+          {
+            "name": "__PBI_LocalDateTable",
+            "value": "true"
+          }
+        ]
+      },
+      {
+        "name": "dim_agency",
+        "columns": [
+          {
+            "name": "agency_key",
+            "dataType": "string",
+            "lineageTag": "6cbde91a-8fde-4775-8a6d-110c6d69a1b5",
+            "summarizeBy": "none",
+            "sourceColumn": "agency_key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "agency_code",
+            "dataType": "string",
+            "lineageTag": "3ba287e2-8f0c-4208-8ee7-6398069f60b0",
+            "summarizeBy": "none",
+            "sourceColumn": "agency_code",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "agency_name",
+            "dataType": "string",
+            "lineageTag": "7792e309-5ff7-4430-995d-9e86cba56058",
+            "summarizeBy": "none",
+            "sourceColumn": "agency_name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "dim_agency",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": "let\n    Source = GoogleBigQuery.Database([Implementation=\"2.0\"]),\n    #\"procurement-analysis-508918_Database\" = Source{[Name=\"procurement-analysis-508918\",Kind=\"Database\"]}[Data],\n    procurement_analytics_Schema = #\"procurement-analysis-508918_Database\"{[Name=\"procurement_analytics\",Kind=\"Schema\"]}[Data],\n    dim_agency_Table = procurement_analytics_Schema{[Name=\"dim_agency\",Kind=\"Table\"]}[Data]\nin\n    dim_agency_Table"
+            }
+          }
+        ],
+        "lineageTag": "01afc7b7-97e7-4d65-b410-74eea73e85d3"
+      },
+      {
+        "name": "dim_supplier",
+        "columns": [
+          {
+            "name": "supplier_key",
+            "dataType": "string",
+            "lineageTag": "d07ba4fa-1650-4d6f-b2f4-a6ec3f9cfb62",
+            "summarizeBy": "none",
+            "sourceColumn": "supplier_key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "recipient_uei",
+            "dataType": "string",
+            "lineageTag": "f24aaba9-2f28-462d-b8cc-daa05269fb31",
+            "summarizeBy": "none",
+            "sourceColumn": "recipient_uei",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "supplier_name",
+            "dataType": "string",
+            "lineageTag": "46672b5c-75c8-452a-b39e-7591472ffaeb",
+            "summarizeBy": "none",
+            "sourceColumn": "supplier_name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Supplier Chart Label",
+            "dataType": "string",
+            "lineageTag": "759566de-54b6-47ae-96c0-0947e451ce84",
+            "summarizeBy": "none",
+            "type": "calculated",
+            "expression": "\n'dim_supplier'[supplier_name] & \" | \" & 'dim_supplier'[recipient_uei]",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "dim_supplier",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": "let\n    Source = GoogleBigQuery.Database([Implementation=\"2.0\"]),\n    #\"procurement-analysis-508918_Database\" = Source{[Name=\"procurement-analysis-508918\",Kind=\"Database\"]}[Data],\n    procurement_analytics_Schema = #\"procurement-analysis-508918_Database\"{[Name=\"procurement_analytics\",Kind=\"Schema\"]}[Data],\n    dim_supplier_Table = procurement_analytics_Schema{[Name=\"dim_supplier\",Kind=\"Table\"]}[Data]\nin\n    dim_supplier_Table"
+            }
+          }
+        ],
+        "lineageTag": "4ded0098-1558-49db-80f8-2e7e7b2fe2fc"
+      },
+      {
+        "name": "fct_contract_actions",
+        "columns": [
+          {
+            "name": "transaction_id",
+            "dataType": "string",
+            "lineageTag": "dbf8921c-0146-4c61-bb3c-33a76db05c2f",
+            "summarizeBy": "none",
+            "sourceColumn": "transaction_id",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "contract_id",
+            "dataType": "string",
+            "lineageTag": "b23cfea3-f3e3-4a7e-abd7-5679c031de93",
+            "summarizeBy": "none",
+            "sourceColumn": "contract_id",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "award_id_piid",
+            "dataType": "string",
+            "lineageTag": "70789f5d-b44c-44b3-9df6-3d106db95233",
+            "summarizeBy": "none",
+            "sourceColumn": "award_id_piid",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "modification_number",
+            "dataType": "string",
+            "lineageTag": "177f6c55-cf84-4f84-87d0-d8127c8d4df7",
+            "summarizeBy": "none",
+            "sourceColumn": "modification_number",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "transaction_number",
+            "dataType": "string",
+            "lineageTag": "6d4030a0-cec4-4578-85ff-ce5999ae5288",
+            "summarizeBy": "none",
+            "sourceColumn": "transaction_number",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "parent_award_agency_id",
+            "dataType": "string",
+            "lineageTag": "57c76357-6126-4e8b-b83a-8fb83983a282",
+            "summarizeBy": "none",
+            "sourceColumn": "parent_award_agency_id",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "parent_award_id_piid",
+            "dataType": "string",
+            "lineageTag": "f42f198f-29eb-4d5f-b99a-3f918a2fc19f",
+            "summarizeBy": "none",
+            "sourceColumn": "parent_award_id_piid",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "supplier_key",
+            "dataType": "string",
+            "lineageTag": "54a13cd1-439d-4ca9-bb15-b74c6589a8b8",
+            "summarizeBy": "none",
+            "sourceColumn": "supplier_key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "agency_key",
+            "dataType": "string",
+            "lineageTag": "6d04f565-9f08-432e-b451-c52958beb2c3",
+            "summarizeBy": "none",
+            "sourceColumn": "agency_key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "funding_agency_key",
+            "dataType": "string",
+            "lineageTag": "2b747f2a-8e7a-4906-89b3-76e6981a8396",
+            "summarizeBy": "none",
+            "sourceColumn": "funding_agency_key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "date_key",
+            "dataType": "dateTime",
+            "formatString": "Long Date",
+            "lineageTag": "cb833ca1-c9e1-4eba-8ef2-9156c42be2e3",
+            "summarizeBy": "none",
+            "sourceColumn": "date_key",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ]
+          },
+          {
+            "name": "obligation_amount",
+            "dataType": "double",
+            "lineageTag": "447d8efc-adc3-4ff4-bce7-2284418dcdec",
+            "summarizeBy": "sum",
+            "sourceColumn": "obligation_amount",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          },
+          {
+            "name": "funding_change_type",
+            "dataType": "string",
+            "lineageTag": "f460bd71-6e04-44ac-bdb9-e741fa1d077b",
+            "summarizeBy": "none",
+            "sourceColumn": "funding_change_type",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "number_of_offers_received",
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "2d9d5946-f8f7-4ac9-9146-59f2de779183",
+            "summarizeBy": "sum",
+            "sourceColumn": "number_of_offers_received",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "is_offer_count_missing",
+            "dataType": "boolean",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "lineageTag": "85aad03a-ddc2-4565-8b51-87e752bcfc56",
+            "summarizeBy": "none",
+            "sourceColumn": "is_offer_count_missing",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "is_offer_count_invalid",
+            "dataType": "boolean",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "lineageTag": "b45e09c1-9aa8-4f1a-9b9e-815b7aa88abc",
+            "summarizeBy": "none",
+            "sourceColumn": "is_offer_count_invalid",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "is_supplier_identifier_missing",
+            "dataType": "boolean",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "lineageTag": "4b61a8f5-9142-4229-8b34-530df52a8d47",
+            "summarizeBy": "none",
+            "sourceColumn": "is_supplier_identifier_missing",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "is_agency_identifier_missing",
+            "dataType": "boolean",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "lineageTag": "a290748e-4504-4be0-b745-acd91a12a84d",
+            "summarizeBy": "none",
+            "sourceColumn": "is_agency_identifier_missing",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "is_funding_agency_identifier_missing",
+            "dataType": "boolean",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "lineageTag": "a1f9b167-4fbc-4bb2-b1e1-b77c54fb4db5",
+            "summarizeBy": "none",
+            "sourceColumn": "is_funding_agency_identifier_missing",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "awarding_sub_agency_code",
+            "dataType": "string",
+            "lineageTag": "529331bb-48aa-431c-a92d-87cd51730763",
+            "summarizeBy": "none",
+            "sourceColumn": "awarding_sub_agency_code",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "awarding_sub_agency_name",
+            "dataType": "string",
+            "lineageTag": "e61a5658-56e9-436a-a3c6-2ed0ce8e5e4d",
+            "summarizeBy": "none",
+            "sourceColumn": "awarding_sub_agency_name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "recipient_country_code",
+            "dataType": "string",
+            "lineageTag": "ee8648d7-a6f0-4c8f-ae9a-2028fc35cbcf",
+            "summarizeBy": "none",
+            "sourceColumn": "recipient_country_code",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "recipient_state_code",
+            "dataType": "string",
+            "lineageTag": "18c88a76-9214-409a-8dd8-3285a8c336c5",
+            "summarizeBy": "none",
+            "sourceColumn": "recipient_state_code",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "recipient_city_name",
+            "dataType": "string",
+            "lineageTag": "513dff1c-c7bc-41f8-8c1b-3f2a8ef17cf0",
+            "summarizeBy": "none",
+            "sourceColumn": "recipient_city_name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "award_type_code",
+            "dataType": "string",
+            "lineageTag": "ce396f88-5090-4e50-81ad-bd31e7b83120",
+            "summarizeBy": "none",
+            "sourceColumn": "award_type_code",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "award_type",
+            "dataType": "string",
+            "lineageTag": "d49b53d9-52ae-433e-a762-a498ca48d3dd",
+            "summarizeBy": "none",
+            "sourceColumn": "award_type",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "action_type_code",
+            "dataType": "string",
+            "lineageTag": "65d74a8d-a346-43a5-af9f-04d68fae4f62",
+            "summarizeBy": "none",
+            "sourceColumn": "action_type_code",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "action_type",
+            "dataType": "string",
+            "lineageTag": "d8f460fd-5005-4c9a-8221-304c4ee9a1f7",
+            "summarizeBy": "none",
+            "sourceColumn": "action_type",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "extent_competed",
+            "dataType": "string",
+            "lineageTag": "f4a3722e-eca7-4789-87a0-728604c653dc",
+            "summarizeBy": "none",
+            "sourceColumn": "extent_competed",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "naics_code",
+            "dataType": "string",
+            "lineageTag": "4ab32c7d-768a-4470-84ce-b5b5a04fdb30",
+            "summarizeBy": "none",
+            "sourceColumn": "naics_code",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "naics_description",
+            "dataType": "string",
+            "lineageTag": "854a3421-5a53-4e27-8136-bfc986ca8ac4",
+            "summarizeBy": "none",
+            "sourceColumn": "naics_description",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "product_or_service_code",
+            "dataType": "string",
+            "lineageTag": "ce0309e6-5529-4032-be69-d46d987c775f",
+            "summarizeBy": "none",
+            "sourceColumn": "product_or_service_code",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "product_or_service_code_description",
+            "dataType": "string",
+            "lineageTag": "98c1b2af-9b66-4e56-a26e-83e1d7d40a59",
+            "summarizeBy": "none",
+            "sourceColumn": "product_or_service_code_description",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "usaspending_permalink",
+            "dataType": "string",
+            "lineageTag": "b323fb1f-912e-4e8a-8c38-2b878d319d15",
+            "summarizeBy": "none",
+            "sourceColumn": "usaspending_permalink",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "fct_contract_actions",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": "let\n    Source = GoogleBigQuery.Database([Implementation=\"2.0\"]),\n    #\"procurement-analysis-508918_Database\" = Source{[Name=\"procurement-analysis-508918\",Kind=\"Database\"]}[Data],\n    procurement_analytics_Schema = #\"procurement-analysis-508918_Database\"{[Name=\"procurement_analytics\",Kind=\"Schema\"]}[Data],\n    fct_contract_actions_Table = procurement_analytics_Schema{[Name=\"fct_contract_actions\",Kind=\"Table\"]}[Data]\nin\n    fct_contract_actions_Table"
+            }
+          }
+        ],
+        "lineageTag": "62f9f72f-2b2a-4137-8b96-cbe149a5f3ce",
+        "measures": [
+          {
+            "name": "Model Total Actions",
+            "expression": "\nCOUNTROWS('fct_contract_actions')",
+            "formatString": "0",
+            "lineageTag": "e00486c9-d914-49c3-9764-790b5223b381"
+          },
+          {
+            "name": "Model Funding Increases",
+            "expression": "\nCALCULATE(\n    SUM('fct_contract_actions'[obligation_amount]),\n    'fct_contract_actions'[obligation_amount] > 0\n)",
+            "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+            "lineageTag": "46865d06-fe1b-4b67-8e58-3572cfab6992"
+          },
+          {
+            "name": "Model Funding Reductions",
+            "expression": "\n-CALCULATE(\n    SUM('fct_contract_actions'[obligation_amount]),\n    'fct_contract_actions'[obligation_amount] < 0\n)",
+            "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+            "lineageTag": "9659ab62-c692-4971-a585-cd9454a1b919"
+          },
+          {
+            "name": "Model Net Obligations",
+            "expression": "\nSUM('fct_contract_actions'[obligation_amount])",
+            "formatString": "\\$#,0.00;(\\$#,0.00);\\$#,0.00",
+            "lineageTag": "91297060-57c6-4949-bdc4-abc3ed28d381"
+          },
+          {
+            "name": "Model Top 5 Supplier Share",
+            "expression": "\nVAR SupplierFunding =\n    CALCULATETABLE(\n        ADDCOLUMNS(\n            FILTER(\n                'dim_supplier',\n                NOT ISBLANK('dim_supplier'[recipient_uei])\n            ),\n            \"@Funding\", [Model Funding Increases]\n        ),\n        REMOVEFILTERS('dim_supplier')\n    )\nVAR TopSuppliers =\n    TOPN(\n        5,\n        FILTER(SupplierFunding, [@Funding] > 0),\n        [@Funding], DESC,\n        'dim_supplier'[supplier_key], ASC\n    )\nVAR TotalFunding =\n    CALCULATE(\n        [Model Funding Increases],\n        REMOVEFILTERS('dim_supplier')\n    )\nRETURN\n    DIVIDE(\n        SUMX(TopSuppliers, [@Funding]),\n        TotalFunding\n    )",
+            "formatString": "0.00%;-0.00%;0.00%",
+            "lineageTag": "705ef878-27d0-47ec-a53a-835ea4dfd656"
+          },
+          {
+            "name": "Model Top 10 Supplier Share",
+            "expression": "\nVAR SupplierFunding =\n    CALCULATETABLE(\n        ADDCOLUMNS(\n            FILTER(\n                'dim_supplier',\n                NOT ISBLANK('dim_supplier'[recipient_uei])\n            ),\n            \"@Funding\", [Model Funding Increases]\n        ),\n        REMOVEFILTERS('dim_supplier')\n    )\nVAR TopSuppliers =\n    TOPN(\n        10,\n        FILTER(SupplierFunding, [@Funding] > 0),\n        [@Funding], DESC,\n        'dim_supplier'[supplier_key], ASC\n    )\nVAR TotalFunding =\n    CALCULATE(\n        [Model Funding Increases],\n        REMOVEFILTERS('dim_supplier')\n    )\nRETURN\n    DIVIDE(\n        SUMX(TopSuppliers, [@Funding]),\n        TotalFunding\n    )",
+            "formatString": "0.00%;-0.00%;0.00%",
+            "lineageTag": "33e6d77b-0d17-4525-90cb-700e3ecbcb9b"
+          },
+          {
+            "name": "Model Offer Count Coverage",
+            "expression": "\nDIVIDE(\n    COUNTROWS(\n        FILTER(\n            'fct_contract_actions',\n            NOT ISBLANK('fct_contract_actions'[number_of_offers_received])\n                && 'fct_contract_actions'[number_of_offers_received] >= 0\n        )\n    ),\n    [Model Total Actions]\n)",
+            "formatString": "0.00%;-0.00%;0.00%",
+            "lineageTag": "c960366c-64c1-41dd-909a-d4a93ec35164"
+          },
+          {
+            "name": "Model Single Offer Share",
+            "expression": "\nDIVIDE(\n    CALCULATE(\n        [Model Total Actions],\n        'fct_contract_actions'[number_of_offers_received] = 1\n    ),\n    CALCULATE(\n        [Model Total Actions],\n        'fct_contract_actions'[number_of_offers_received] >= 1\n    )\n)",
+            "formatString": "0.00%;-0.00%;0.00%",
+            "lineageTag": "4b57dea9-9343-477c-9155-39ca5480ec95"
+          },
+          {
+            "name": "Model Usable Offer Count Actions",
+            "expression": "\nCOUNTROWS(\n    FILTER(\n        'fct_contract_actions',\n        NOT ISBLANK('fct_contract_actions'[number_of_offers_received])\n            && 'fct_contract_actions'[number_of_offers_received] >= 0\n    )\n)",
+            "formatString": "0",
+            "lineageTag": "6e799dab-df2f-4f2b-b62b-6ed8a0b5d9f4"
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "2a1b88e7-4a3c-4e62-a134-793573d6d3f4",
+        "fromTable": "dim_date",
+        "fromColumn": "date_key",
+        "toTable": "LocalDateTable_686ba2c0-74fc-4c8d-a1d2-12fade15a5fd",
+        "toColumn": "Date",
+        "crossFilteringBehavior": "oneDirection",
+        "isActive": true,
+        "joinOnDateBehavior": "datePartOnly"
+      },
+      {
+        "name": "AutoDetected_1a5f7b86-98ed-49d5-bb8e-bc35d1776213",
+        "fromTable": "fct_contract_actions",
+        "fromColumn": "agency_key",
+        "toTable": "dim_agency",
+        "toColumn": "agency_key",
+        "crossFilteringBehavior": "oneDirection",
+        "isActive": true
+      },
+      {
+        "name": "AutoDetected_6263cf8a-b073-4d94-868d-45cb77d04c60",
+        "fromTable": "fct_contract_actions",
+        "fromColumn": "supplier_key",
+        "toTable": "dim_supplier",
+        "toColumn": "supplier_key",
+        "crossFilteringBehavior": "oneDirection",
+        "isActive": true
+      },
+      {
+        "name": "e3e2cdb3-47fb-b1f6-156b-4c1ca8550fa4",
+        "fromTable": "fct_contract_actions",
+        "fromColumn": "date_key",
+        "toTable": "dim_date",
+        "toColumn": "date_key",
+        "crossFilteringBehavior": "oneDirection",
+        "isActive": true
+      }
+    ],
+    "annotations": [
+      {
+        "name": "__PBI_TimeIntelligenceEnabled",
+        "value": "1"
+      },
+      {
+        "name": "PBI_QueryOrder",
+        "value": "[\"dim_date\",\"dim_agency\",\"dim_supplier\",\"fct_contract_actions\"]"
+      }
+    ]
+  }
+}

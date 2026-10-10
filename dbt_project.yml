@@ -1,0 +1,9 @@
+﻿name: procurement_analytics
+version: "1.0.0"
+config-version: 2
+profile: procurement_analytics
+model-paths: ["models"]
+
+models:
+  procurement_analytics:
+    +materialized: view

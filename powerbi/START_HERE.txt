@@ -1,0 +1,19 @@
+PROCUREMENT FUNDING — POWER BI PROJECT FOR GITHUB
+
+Open Procurement_Funding_Improved.pbip in Power BI Desktop, keeping the Report
+and SemanticModel folders alongside it. This package excludes .pbi/cache.abf
+and local settings. It contains definitions, not the imported data snapshot.
+
+Update the four Power Query source queries to your BigQuery project/dataset,
+authenticate using your own account, and refresh after building the dbt models.
+The supplied queries retain the original project procurement-analysis-508918
+and dataset procurement_analytics. No login credentials are included.
+
+There are three report pages and nine DAX measures. The semantic model has the
+four business tables plus two hidden automatic date tables. Agency dropdowns
+are page-specific. Supplier concentration ignores supplier selections while
+retaining agency/date context. See ../docs/architecture-and-metrics.md.
+
+The report and semantic-model JSON were checked structurally during packaging.
+Power BI Desktop opening, rendering, refresh and interactions were not tested
+here. Existing dashboard screenshots predate this improved report layout.

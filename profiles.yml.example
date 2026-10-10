@@ -1,0 +1,11 @@
+# Example only: replace placeholders and configure your own authentication.
+procurement_analytics:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: oauth
+      project: YOUR_GCP_PROJECT_ID
+      dataset: YOUR_OUTPUT_DATASET
+      location: YOUR_BIGQUERY_LOCATION
+      threads: 4

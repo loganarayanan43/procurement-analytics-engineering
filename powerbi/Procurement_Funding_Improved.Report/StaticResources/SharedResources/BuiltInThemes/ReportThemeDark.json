@@ -1,0 +1,28 @@
+{
+  "name": "Procurement Executive",
+  "dataColors": [
+    "#008C87",
+    "#4479B4",
+    "#D97732",
+    "#7486A5",
+    "#B79A61",
+    "#685BA6"
+  ],
+  "background": "#FFFFFF",
+  "foreground": "#142D4E",
+  "tableAccent": "#008C87",
+  "textClasses": {
+    "callout": {
+      "fontFace": "Segoe UI Semibold",
+      "color": "#142D4E"
+    },
+    "title": {
+      "fontFace": "Segoe UI Semibold",
+      "color": "#142D4E"
+    },
+    "label": {
+      "fontFace": "Segoe UI",
+      "color": "#52647A"
+    }
+  }
+}
