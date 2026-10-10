@@ -1,0 +1,26 @@
+.venv/
+venv/
+__pycache__/
+*.pyc
+target/
+dbt_packages/
+logs/
+.user.yml
+profiles.yml
+.env
+.env.*
+!.env.example
+*service-account*.json
+*credentials*.json
+*.pem
+*.key
+*.csv
+*.zip
+*.pbix
+*.pbit
+.DS_Store
+Thumbs.db
+
+# Power BI local cache and user settings
+**/.pbi/
+*.abf
