@@ -14,7 +14,7 @@ How can a large set of contract actions be shaped into a reliable model that let
 - **Warehouse:** Google BigQuery
 - **Transformations:** SQL models managed with dbt, run from a local development environment
 - **Analytics model:** one fact table and three dimensions
-- **Reporting:** Power BI, with three report pages
+- **Reporting:** Power BI, with four report pages (including rule-based prescriptive decision support)
 
 This is a nonrandom extract covering 21 days. It is not a full fiscal-year or population-level view of federal procurement.
 
@@ -58,11 +58,12 @@ Amounts are obligations, not payments. Offer-count results describe only records
 
 ## Power BI report
 
-The included improved Power BI project has three pages. The screenshots below show the earlier report layout, not fresh renders of this improved version:
+The current Power BI project includes **four pages**. The first three screenshots below show an earlier Desktop layout; the new fourth-page image is a **design preview**, not a Power BI Desktop capture or evidence of successful refresh.
 
 1. **Procurement Overview** — action and obligation totals, agency funding increases, and daily funding changes.
 2. **Supplier Analysis** — supplier-level funding and top-supplier concentration.
 3. **Competition & Data Quality** — offer-count coverage and single-offer metrics by agency.
+4. **Prescriptive Analysis** — agency review priorities, rule-based warning signals, and recommended analyst follow-ups calculated using DAX measures.
 
 ### Procurement Overview
 
@@ -75,6 +76,12 @@ The included improved Power BI project has three pages. The screenshots below sh
 ### Competition & Data Quality
 
 ![Competition & Data Quality](docs/images/competition-data-quality.png)
+
+### Prescriptive Analysis — Page 4 (design preview)
+
+![Prescriptive Analysis design preview — not a live Power BI screenshot](docs/images/prescriptive-analysis-preview.png)
+
+*The fourth page is included in the updated PBIP. This image is a design preview, not a verified Power BI Desktop screenshot. Desktop opening, rendering, calculations, and refresh remain untested.*
 
 ## Findings and implications
 
@@ -93,7 +100,7 @@ In addition to descriptive Power BI reporting, the dbt project includes a **rule
 
 Each signal includes a priority, measured evidence, sample/support count, recommended review action, and interpretation warning. Thresholds are illustrative, and signals are **not** proof of waste, misconduct, or realized savings.
 
-See the [prescriptive analysis methodology](docs/prescriptive-analysis.md) and [review-queue test](tests/assert_review_queue_logic.sql). The additional model has **not been executed in BigQuery as part of this upload**, and the existing three-page Power BI report remains unchanged.
+See the [prescriptive analysis methodology](docs/prescriptive-analysis.md) and [review-queue test](tests/assert_review_queue_logic.sql). The additional dbt model has **not been executed in BigQuery as part of this upload**. The Power BI project now includes a fourth page with DAX-based recommendations; the separate dbt review view is optional for that page. The report has not been independently verified in Power BI Desktop.
 
 ## Reproducing the project
 
@@ -145,7 +152,7 @@ See [architecture and metrics](docs/architecture-and-metrics.md) for relationshi
 | `models/reporting/` | Six SQL reporting views, including prescriptive recommendations |
 | `tests/` | Ten SQL tests, including a prescriptive rule-quality test |
 | `docs/` | Architecture, metric definitions, validation notes, and screenshots |
-| `powerbi/` | Improved report, semantic model, nine DAX measures, and opening instructions; no data cache |
+| `powerbi/` | Updated four-page report, semantic model, 17 DAX measures (9 existing and 8 prescriptive), and opening instructions; no data cache in GitHub |
 | `profiles.yml.example` | Credential-free BigQuery profile example |
 | `.gitignore` | Exclusions for local configuration, generated output, and large files |
 
@@ -158,6 +165,7 @@ The original models and tests are preserved. SQL reporting summaries remain usef
 - Obligations are not the same as cash payments.
 - Offer counts are missing for most actions, which limits competition analysis.
 - Funding concentration and offer-count metrics are descriptive. They do not establish waste, poor performance, or misconduct.
+- The prescriptive image is a design preview. The new page has not been verified by opening and refreshing the PBIP in Power BI Desktop.
 
 ## Tools
 
