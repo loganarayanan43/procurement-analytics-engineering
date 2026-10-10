@@ -2,7 +2,7 @@
 
 ## Transformation layers
 
-The raw BigQuery table feeds `stg_contract_actions`, which normalizes whitespace and empty strings. `int_contract_actions` preserves raw values and uses safe casts for dates, obligations, and offer counts. The mart layer builds supplier, agency, and date dimensions plus the action-level fact. Five reporting views aggregate the fact for SQL analysis and reconciliation. Power BI uses the fact and dimensions directly.
+The raw BigQuery table feeds `stg_contract_actions`, which normalizes whitespace and empty strings. `int_contract_actions` preserves raw values and uses safe casts for dates, obligations, and offer counts. The mart layer builds supplier, agency, and date dimensions plus the action-level fact. Six reporting views aggregate the fact for SQL analysis and reconciliation. Power BI uses the fact and dimensions directly.
 
 The supplied source expects STRING columns. A missing offer value becomes null, a failed numeric cast is flagged as invalid, and a negative offer count is separately counted in the overview. Unknown supplier/agency identifiers map to explicit `unknown` dimension rows.
 
@@ -44,3 +44,7 @@ Supplier ranking uses a unique supplier key to break ties. Report chart labels c
 ## Interpretation boundaries
 
 Obligations are commitments, not cash payments. Funding reductions are not automatically savings. One reported offer does not establish misconduct or absence of competition. Missing offer counts are not zero offers. Daily movements describe this extract and do not establish seasonality or forecasting performance.
+
+## Prescriptive review queue
+
+The additional dbt view `rpt_procurement_review_queue` uses contract facts and awarding-agency labels to suggest **targeted next reviews**. It provides evidence metrics, minimum sample conditions, analyst actions, and interpretation warnings for offer-count completeness, single-offer proportions, supplier concentration, and funding changes. It does not change the existing fact/dimensions or the three-page Power BI report. See [prescriptive methodology](prescriptive-analysis.md). This extension has not yet been executed against a live warehouse.
