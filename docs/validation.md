@@ -2,7 +2,7 @@
 
 ## Supplied test definitions
 
-The archive contains 9 singular SQL tests:
+The original archive contains 9 singular SQL tests; one prescriptive rule validation test has now been added (10 total):
 
 | Test | Main check |
 |---|---|
@@ -15,6 +15,7 @@ The archive contains 9 singular SQL tests:
 | `assert_supplier_report_reconciliation` | Supplier totals reconcile to overview |
 | `assert_agency_industry_reconciliation` | Each agency role and industry totals reconcile to overview |
 | `assert_summary_grains` | Agency role/key and industry key groups are unique |
+| `assert_review_queue_logic` | Review queue priority, evidence and one-row-per-agency-and-signal validation |
 
 Generic tests in `models/marts/marts.yml` cover dimension key uniqueness/nulls, fact transaction identifier uniqueness/nulls, and supplier/awarding-agency/date relationships.
 
@@ -33,3 +34,7 @@ The three images are cropped versions of supplied desktop screenshots. They are 
 ## Added Power BI project
 
 The supplied improved PBIP archive contains a legacy report.json report and a model.bim semantic model. The package retains their original bytes and excludes the 103,481,344-byte imported cache. JSON syntax and relative report/model paths were checked. There are three pages, nine DAX measures, four business tables, and two hidden automatic date tables. Power BI Desktop opening, rendering, refresh, and interactions remain untested here. Screenshots show the earlier layout.
+
+## Prescriptive validation status
+
+The newly added [prescriptive dbt view](../models/reporting/rpt_procurement_review_queue.sql) and [test](../tests/assert_review_queue_logic.sql) have **not been run against BigQuery** during this GitHub update. No agency review alerts or savings are claimed as observed outcomes. The Power BI report still contains its original three pages.
