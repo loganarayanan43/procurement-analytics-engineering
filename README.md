@@ -33,7 +33,7 @@ Power BI uses single-direction, one-to-many relationships from the dimensions to
 
 ## dbt quality checks
 
-The source includes **12 SQL models**, **10 singular SQL tests**, and generic key/relationship tests in `models/marts/marts.yml`. See [validation notes](docs/validation.md) for what has and has not been verified.
+The source includes **12 SQL models**, **11 singular SQL tests**, and generic key/relationship tests in `models/marts/marts.yml`. See [validation notes](docs/validation.md) for what has and has not been verified.
 
 The project includes checks for expected record count and obligation-total reconciliation. Both were reported as passing for the 500,000-action model. These checks help detect lost or duplicated actions and changes to financial totals during transformation.
 
@@ -102,6 +102,10 @@ Each signal includes a priority, measured evidence, sample/support count, recomm
 
 See the [prescriptive analysis methodology](docs/prescriptive-analysis.md) and [review-queue test](tests/assert_review_queue_logic.sql). The additional dbt model has **not been executed in BigQuery as part of this upload**. The Power BI project now includes a fourth page with DAX-based recommendations; the separate dbt review view is optional for that page. The report has not been independently verified in Power BI Desktop.
 
+## Current validation status
+
+Offline static validation checks the dbt references, Power BI's four-page structure and 17 DAX names, visual field references, and documentation links. A separate SQL test now independently reconciles prescriptive review thresholds. However **no authenticated BigQuery result or native Power BI Desktop refresh/run screenshot has been captured yet**. A manual BigQuery GitHub Actions workflow and a [step-by-step Desktop checklist](docs/execution-validation.md) are available; neither should be marked passed before real execution.
+
 ## Reproducing the project
 
 This is an **ELT** project: source records are loaded into BigQuery first; dbt transforms them inside BigQuery. Local VS Code/dbt provides development and execution control.
@@ -150,8 +154,8 @@ See [architecture and metrics](docs/architecture-and-metrics.md) for relationshi
 | `models/intermediate/` | Type conversion and funding/quality flags |
 | `models/marts/` | One fact, three dimensions, and generic tests |
 | `models/reporting/` | Six SQL reporting views, including prescriptive recommendations |
-| `tests/` | Ten SQL tests, including a prescriptive rule-quality test |
-| `docs/` | Architecture, metric definitions, validation notes, and screenshots |
+| `tests/` | Eleven SQL singular tests, including prescriptive rule-quality and independent trigger/reconciliation tests |
+| `docs/` | Architecture, metric definitions, [execution/validation guide](docs/execution-validation.md), and screenshots |
 | `powerbi/` | Updated four-page report, semantic model, 17 DAX measures (9 existing and 8 prescriptive), and opening instructions; no data cache in GitHub |
 | `profiles.yml.example` | Credential-free BigQuery profile example |
 | `.gitignore` | Exclusions for local configuration, generated output, and large files |
