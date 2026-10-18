@@ -59,7 +59,7 @@ order by case priority when 'HIGH' then 0 else 1 end,
 
 ## How this fits Power BI
 
-The shipped three-page PBIP remains unchanged; a fourth page has **not** been added or tested. For an optional **Action Priorities** page, load this dbt view and show a priority matrix (agency, signal, evidence, next step) and a breakdown of review types. Keep the guardrail visible and link back to detailed facts; do not label it a compliance violation dashboard.
+The shipped PBIP now contains a fourth **Prescriptive Analysis** page with DAX-based agency priorities and recommendations. It uses the existing imported fact and agency dimensions, not the separate dbt review queue. The two implementations share review intent but are not a single shared implementation: SQL produces one row per triggered rule, while Power BI presents the highest-priority signal. Desktop rendering, interaction, and refresh have not been tested; the fourth-page image is a design preview rather than a genuine Power BI Desktop capture. See [execution validation](execution-validation.md).
 
 ## Limitations and validation
 
@@ -67,3 +67,7 @@ The shipped three-page PBIP remains unchanged; a fourth page has **not** been ad
 - Offer-count missingness is substantial. A single offer does not indicate misconduct; a reduction does not mean saved cash; supplier concentration can reflect legitimate specialized purchasing.
 - Rule cutoffs are **transparent illustrative triage defaults**. Confirm with procurement stakeholders before operational use.
 - Run `dbt build` in BigQuery to verify the new SQL model and its singular test. No new view results or report-refresh validation are asserted by this commit.
+
+## Additional validation coverage
+
+The repository now includes `tests/assert_review_queue_thresholds.sql`, which independently reconstructs review signals and priorities from the awarding-agency summary and fact to compare actual queue output. Boundary specification tests cover 35%/70% offer coverage, 50%/65% single-offer thresholds, 35%/50% supplier share and 20%/40% funding adjustments. This increases verification coverage, but remains **unexecuted against the BigQuery dataset** until an authenticated `dbt build` passes.
