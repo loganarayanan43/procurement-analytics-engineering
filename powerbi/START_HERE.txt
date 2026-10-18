@@ -12,7 +12,7 @@ if you want to retain the existing imported snapshot. Refreshing uses the
 original Google BigQuery queries and requires your existing source access.
 
 IMPROVEMENTS
-- Three consistently styled 1600 x 900 report pages.
+- Four consistently styled 1600 x 900 report pages.
 - Clear titles, readable typography, white panels and navy/teal/orange colours.
 - Four KPI cards on every page and an awarding-agency dropdown per page.
 - Daily trend explicitly sorted by date ascending.
@@ -48,3 +48,8 @@ PRESCRIPTIVE ANALYSIS (NEW FOURTH PAGE)
 - Suggested action and priority are NOT compliance findings or verified savings. The page uses illustrative triage thresholds.
 - Screenshot/preview is a designed representation using verified report-level totals; not a live Power BI capture or proof of successful Desktop refresh.
 - The separate dbt BigQuery view in GitHub is optional and not required by this page; the DAX measures implement equivalent review intent.
+
+REPEATABLE VALIDATION
+- `python scripts/validate_repository.py` from the repository root checks references and configuration, not Desktop execution.
+- For true BigQuery execution, follow `docs/execution-validation.md` and capture real dbt run results.
+- For native Power BI verification, open, refresh, test page interactions, save/reopen and capture a genuine Desktop screenshot.
