@@ -33,7 +33,7 @@ Power BI uses single-direction, one-to-many relationships from the dimensions to
 
 ## dbt quality checks
 
-The source includes **12 SQL models**, **10 singular SQL tests**, and generic key/relationship tests in `models/marts/marts.yml`. See [validation notes](docs/validation.md) for what has and has not been verified.
+The source includes **12 SQL models**, **12 singular SQL tests**, and generic key/relationship tests in `models/marts/marts.yml`. See [validation notes](docs/validation.md) for what has and has not been verified.
 
 The project includes checks for expected record count and obligation-total reconciliation. Both were reported as passing for the 500,000-action model. These checks help detect lost or duplicated actions and changes to financial totals during transformation.
 
@@ -98,9 +98,9 @@ In addition to descriptive Power BI reporting, the dbt project includes a **rule
 - **Supplier concentration:** examine agency-level reliance on the largest identified suppliers.
 - **Funding adjustments:** review large funding-reduction ratios with finance and procurement owners.
 
-Each signal includes a priority, measured evidence, sample/support count, recommended review action, and interpretation warning. Thresholds are illustrative, and signals are **not** proof of waste, misconduct, or realized savings.
+Each signal includes a priority, measured evidence (displayed to two decimal places and retained unrounded for auditing), sample/support count, recommended review action, and interpretation warning. Thresholds are illustrative, and signals are **not** proof of waste, misconduct, or realized savings.
 
-See the [prescriptive analysis methodology](docs/prescriptive-analysis.md) and [review-queue test](tests/assert_review_queue_logic.sql). The additional dbt model has **not been executed in BigQuery as part of this upload**. The Power BI project now includes a fourth page with DAX-based recommendations; the separate dbt review view is optional for that page. The report has not been independently verified in Power BI Desktop.
+See the [prescriptive analysis methodology](docs/prescriptive-analysis.md), [queue output test](tests/assert_review_queue_logic.sql), [independent fact reconciliation](tests/assert_review_queue_reconciliation.sql), and [threshold boundary fixtures](tests/assert_review_queue_thresholds.sql). The additional dbt model and new regression tests have **not been executed in BigQuery as part of this update**; adding tests is not evidence that they have passed. The Power BI project now includes a fourth page with DAX-based recommendations; the separate dbt review view is optional for that page. The report has not been independently verified in Power BI Desktop.
 
 ## Reproducing the project
 
@@ -150,7 +150,7 @@ See [architecture and metrics](docs/architecture-and-metrics.md) for relationshi
 | `models/intermediate/` | Type conversion and funding/quality flags |
 | `models/marts/` | One fact, three dimensions, and generic tests |
 | `models/reporting/` | Six SQL reporting views, including prescriptive recommendations |
-| `tests/` | Ten SQL tests, including a prescriptive rule-quality test |
+| `tests/` | Twelve singular SQL tests, including output quality, independent reconciliation and threshold boundary tests |
 | `docs/` | Architecture, metric definitions, validation notes, and screenshots |
 | `powerbi/` | Updated four-page report, semantic model, 17 DAX measures (9 existing and 8 prescriptive), and opening instructions; no data cache in GitHub |
 | `profiles.yml.example` | Credential-free BigQuery profile example |
