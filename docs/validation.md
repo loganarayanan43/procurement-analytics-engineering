@@ -2,7 +2,7 @@
 
 ## Supplied test definitions
 
-The original archive contains 9 singular SQL tests; one prescriptive rule validation test has now been added (10 total):
+The original archive contains 9 singular SQL tests; three prescriptive validation tests are now included (12 total):
 
 | Test | Main check |
 |---|---|
@@ -15,7 +15,9 @@ The original archive contains 9 singular SQL tests; one prescriptive rule valida
 | `assert_supplier_report_reconciliation` | Supplier totals reconcile to overview |
 | `assert_agency_industry_reconciliation` | Each agency role and industry totals reconcile to overview |
 | `assert_summary_grains` | Agency role/key and industry key groups are unique |
-| `assert_review_queue_logic` | Review queue priority, evidence and one-row-per-agency-and-signal validation |
+| `assert_review_queue_logic` | Null-safe required fields, priority/evidence constraints and one-row-per-agency-and-signal validation |
+| `assert_review_queue_thresholds` | Synthetic boundary and eligibility fixtures for four prescriptive review types |
+| `assert_review_queue_reconciliation` | Independent real-data expected-vs-actual review output, priority, evidence and support checks |
 
 Generic tests in `models/marts/marts.yml` cover dimension key uniqueness/nulls, fact transaction identifier uniqueness/nulls, and supplier/awarding-agency/date relationships.
 
@@ -37,4 +39,12 @@ The supplied improved PBIP archive contains a legacy report.json report and a mo
 
 ## Prescriptive validation status
 
-The newly added [prescriptive dbt view](../models/reporting/rpt_procurement_review_queue.sql) and [test](../tests/assert_review_queue_logic.sql) have **not been run against BigQuery** during this GitHub update. No agency review alerts or savings are claimed as observed outcomes. The Power BI report still contains its original three pages.
+The [prescriptive dbt view](../models/reporting/rpt_procurement_review_queue.sql) and three rule-specific tests (output validity, synthetic boundaries, independent fact reconciliation) have **not been run against BigQuery** during this GitHub update. No agency review alerts or savings are claimed as observed outcomes. The current repository README describes a four-page PBIP including a DAX-based fourth page, while the prior packaging note above describes the earlier three-page PBIP. The four-page project has **not** been verified by opening or refreshing it in Power BI Desktop. Neither the DAX page nor its preview validates the separate dbt review queue.
+
+## Smallest prescriptive evidence package
+
+1. **Execution:** capture commit SHA, date, dbt and adapter versions, selected warehouse dataset, model materialization status, and sanitized `target/run_results.json` from a successful `dbt build`.
+2. **Real output:** export counts by rule and priority, row count, agency count, representative real agency records (if any), and passing independent reconciliation. An empty queue must be explained by the eligibility rules, not assumed valid merely because an output-quality test passed.
+3. **Boundaries:** capture passing `assert_review_queue_thresholds` results, including support gates, trigger thresholds and HIGH cutoffs. Thresholds remain illustrative, not regulatory standards.
+
+The repository changes alone are not evidence of successful execution. Do not check in cloud credentials, raw source records, personally identifying contract data, or unsanitized warehouse logs.
