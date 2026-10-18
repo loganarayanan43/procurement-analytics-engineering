@@ -30,13 +30,13 @@ These are descriptive results that **motivate** the review rules, not observed o
 
 ## Prioritization and stakeholder workflow
 
-1. Materialize/refresh the fact and queue with `dbt build`; inspect `dbt test --select assert_review_queue_logic`.
+1. Materialize/refresh the fact and queue with `dbt build`; inspect `dbt test --select assert_review_queue_logic assert_review_queue_thresholds assert_review_queue_reconciliation`.
 2. Sort HIGH ahead of MEDIUM; within priority, use evidence, denominator/sample count and analyst capacity to plan review.
 3. Validate a sample of action-level source records, supplier identifiers and contract documentation.
 4. Discuss exceptions with agency/procurement owners. Record a decision: no action, additional data collection, targeted review, or policy/process improvement.
 5. Track the **share of reviewed items resolved**, offer-data completeness improvements, and documented follow-up actions. Do not report unverified dollar savings.
 
-The `evidence_percent` column is **not a risk probability**, and different review types cannot be directly compared by magnitude. The `supporting_record_count` changes interpretation by rule: missing/unusable records, actions with >=1 reported offer, identified suppliers with increases, or total actions.
+Rule thresholds use the unrounded value in `evidence_percent_unrounded`; `evidence_percent` is rounded for display and can appear exactly at a threshold even when the unrounded value lies slightly to one side. The `evidence_percent` column is **not a risk probability**, and different review types cannot be directly compared by magnitude. The `supporting_record_count` changes interpretation by rule: missing/unusable records, actions with >=1 reported offer, identified suppliers with increases, or total actions.
 
 ## Query example
 
@@ -59,11 +59,14 @@ order by case priority when 'HIGH' then 0 else 1 end,
 
 ## How this fits Power BI
 
-The shipped three-page PBIP remains unchanged; a fourth page has **not** been added or tested. For an optional **Action Priorities** page, load this dbt view and show a priority matrix (agency, signal, evidence, next step) and a breakdown of review types. Keep the guardrail visible and link back to detailed facts; do not label it a compliance violation dashboard.
+The repository now contains a four-page PBIP, but its fourth Prescriptive Analysis page is **DAX-based**, not connected to the optional dbt review queue. The fourth-page image is a design preview, not proof of Power BI Desktop opening or refresh. The SQL review queue is a separate optional source. To integrate it, load and validate the dbt view in Power BI and display agency, signal, evidence, recommended action, and interpretation guardrail. Do not claim that a DAX-page refresh validates the dbt queue.
 
 ## Limitations and validation
 
 - This is a **nonrandom extract of 500,000 actions over September 10–30, 2025**, not a full fiscal year. Findings cannot establish trends, national prevalence, savings opportunities or causal outcomes.
 - Offer-count missingness is substantial. A single offer does not indicate misconduct; a reduction does not mean saved cash; supplier concentration can reflect legitimate specialized purchasing.
 - Rule cutoffs are **transparent illustrative triage defaults**. Confirm with procurement stakeholders before operational use.
-- Run `dbt build` in BigQuery to verify the new SQL model and its singular test. No new view results or report-refresh validation are asserted by this commit.
+- Run `dbt build` in BigQuery, retain sanitized execution logs and `target/run_results.json`, and inspect the actual queue including a review-type/priority count and independently reconciled agency evidence. The added threshold fixture and independent reconciliation tests are code changes, **not recorded test passes**. No live queue outputs or report-refresh validation are asserted.
+- BigQuery's raw offer count may cast negative values successfully. The queue counts usable offers as >=0, whereas upstream `is_offer_count_invalid` currently indicates conversion failure only; reconcile these distinct conventions when explaining missing/unusable values.
+- The agency grouping always uses awarding-agency keys. `dim_agency` may select the displayed name from an awarding or funding observation of the same agency code.
+- Use illustrative rules for triage only. Operational thresholds require procurement-owner review and calibration.
