@@ -1,0 +1,66 @@
+name: BigQuery dbt validation (manual, billable)
+# This workflow is intentionally manual: it runs billable queries against the configured GCP project.
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  id-token: write
+jobs:
+  dbt-bigquery:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check required GitHub configuration
+        env:
+          GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+          GCP_BQ_DATASET: ${{ vars.GCP_BQ_DATASET }}
+          GCP_BQ_LOCATION: ${{ vars.GCP_BQ_LOCATION }}
+          GCP_WIF_PROVIDER: ${{ secrets.GCP_WIF_PROVIDER }}
+          GCP_SERVICE_ACCOUNT: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+        run: |
+          for field in GCP_PROJECT_ID GCP_BQ_DATASET GCP_BQ_LOCATION GCP_WIF_PROVIDER GCP_SERVICE_ACCOUNT; do
+            if [[ -z "${!field:-}" ]]; then
+              echo "::error::Missing $field. Configure GitHub Variables/Secrets and authorize BigQuery access first."
+              exit 1
+            fi
+          done
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+          create_credentials_file: true
+      - name: Install dbt BigQuery adapter
+        run: python -m pip install dbt-bigquery
+      - name: Configure temporary dbt profile
+        env:
+          GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+          GCP_BQ_DATASET: ${{ vars.GCP_BQ_DATASET }}
+          GCP_BQ_LOCATION: ${{ vars.GCP_BQ_LOCATION }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/dbt-profiles"
+          cat > "$RUNNER_TEMP/dbt-profiles/profiles.yml" <<EOF
+          procurement_analytics:
+            target: dev
+            outputs:
+              dev:
+                type: bigquery
+                method: oauth
+                project: ${GCP_PROJECT_ID}
+                dataset: ${GCP_BQ_DATASET}
+                location: ${GCP_BQ_LOCATION}
+                threads: 4
+          EOF
+          echo "DBT_PROFILES_DIR=$RUNNER_TEMP/dbt-profiles" >> "$GITHUB_ENV"
+      - name: Run real dbt models and tests
+        run: |
+          dbt debug
+          dbt build
+          python scripts/capture_dbt_evidence.py --run-results target/run_results.json --out validation-evidence/bigquery-dbt.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sanitized-bigquery-dbt-evidence
+          path: validation-evidence/bigquery-dbt.json
+          if-no-files-found: error
