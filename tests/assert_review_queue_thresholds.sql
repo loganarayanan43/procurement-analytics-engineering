@@ -27,7 +27,7 @@ with cases as (
  struct('fund_over_100' as agency_key, 100 as action_count, 80 as usable_offer_count_actions, 80 as actions_with_at_least_one_offer, 20 as single_offer_actions, 100 as funding_increases, 150 as funding_reductions, 3 as identified_positive_suppliers, 0 as unknown_supplier_funding_share_percent, 20 as leading_supplier_funding_share_percent),
  struct('fund_zero' as agency_key, 100 as action_count, 80 as usable_offer_count_actions, 80 as actions_with_at_least_one_offer, 20 as single_offer_actions, 0 as funding_increases, 20 as funding_reductions, 3 as identified_positive_suppliers, 0 as unknown_supplier_funding_share_percent, 0 as leading_supplier_funding_share_percent),
  struct('near_rounded_70' as agency_key, 100000 as action_count, 69999 as usable_offer_count_actions, 69999 as actions_with_at_least_one_offer, 1000 as single_offer_actions, 100 as funding_increases, 0 as funding_reductions, 3 as identified_positive_suppliers, 0 as unknown_supplier_funding_share_percent, 20 as leading_supplier_funding_share_percent),
- struct('negative_offers' as agency_key, 100 as action_count, 69 as usable_offer_count_actions, 69 as actions_with_at_least_one_offer, 20 as single_offer_actions, 100 as funding_increases, 0 as funding_reductions, 3 as identified_positive_suppliers, 0 as unknown_supplier_funding_share_percent, 20 as leading_supplier_funding_share_percent)
+ struct('unusable_offer_coverage' as agency_key, 100 as action_count, 69 as usable_offer_count_actions, 69 as actions_with_at_least_one_offer, 20 as single_offer_actions, 100 as funding_increases, 0 as funding_reductions, 3 as identified_positive_suppliers, 0 as unknown_supplier_funding_share_percent, 20 as leading_supplier_funding_share_percent)
  ])
 ),
 e as (
@@ -58,7 +58,7 @@ expected as (
  struct('fund_40' as agency_key,'FUNDING_CHANGE_REVIEW' as review_type,'HIGH' as priority),
  struct('fund_over_100' as agency_key,'FUNDING_CHANGE_REVIEW' as review_type,'HIGH' as priority),
  struct('near_rounded_70' as agency_key,'OFFER_DATA_COMPLETENESS' as review_type,'MEDIUM' as priority),
- struct('negative_offers' as agency_key,'OFFER_DATA_COMPLETENESS' as review_type,'MEDIUM' as priority)
+ struct('unusable_offer_coverage' as agency_key,'OFFER_DATA_COMPLETENESS' as review_type,'MEDIUM' as priority)
  ])
 ),
 missing as (
