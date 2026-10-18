@@ -15,7 +15,7 @@ invalid as (
      or priority is null or priority not in ('HIGH', 'MEDIUM')
      or nullif(trim(evidence_metric), '') is null
      or evidence_percent is null or evidence_percent_unrounded is null
-     or not is_finite(evidence_percent_unrounded)
+     or (is_inf(evidence_percent_unrounded) or is_nan(evidence_percent_unrounded))
      or evidence_percent_unrounded < 0
      or (review_type is null or review_type != 'FUNDING_CHANGE_REVIEW')
         and evidence_percent_unrounded > 100
