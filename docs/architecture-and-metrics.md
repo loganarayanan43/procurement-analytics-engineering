@@ -47,4 +47,8 @@ Obligations are commitments, not cash payments. Funding reductions are not autom
 
 ## Prescriptive review queue
 
-The additional dbt view `rpt_procurement_review_queue` uses contract facts and awarding-agency labels to suggest **targeted next reviews**. It provides evidence metrics, minimum sample conditions, analyst actions, and interpretation warnings for offer-count completeness, single-offer proportions, supplier concentration, and funding changes. It does not change the existing fact/dimensions or the three-page Power BI report. See [prescriptive methodology](prescriptive-analysis.md). This extension has not yet been executed against a live warehouse.
+The additional dbt view `rpt_procurement_review_queue` uses contract facts and awarding-agency labels to suggest **targeted next reviews**. It provides evidence metrics, minimum sample conditions, analyst actions, and interpretation warnings for offer-count completeness, single-offer proportions, supplier concentration, and funding changes. It does not change the existing fact/dimensions; the Power BI report now has a separate DAX-driven fourth page. See [prescriptive methodology](prescriptive-analysis.md). This extension has not yet been executed against a live warehouse.
+
+## Validation workflows
+
+GitHub Actions runs structural integrity tests and Python boundary specification tests. An opt-in [BigQuery execution workflow](../.github/workflows/bigquery-validation.yml) can run `dbt build` once authorized Workload Identity and repository variables have been configured. BigQuery job success is not the same as Power BI Desktop refresh evidence; follow the [execution validation guide](execution-validation.md) for both.
